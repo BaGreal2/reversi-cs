@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="https://github.com/avaloniaui/designer" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:Reversi.ViewModels" x:Class="Reversi.Views.MainWindow" Width="600" Height="600" Title="Reversi" mc:Ignorable="d">
+  <Window.DataContext>
+    <vm:ReversiViewModel/>
+  </Window.DataContext>
+  <Grid Background="#1B1B1B">
+    <!-- MAIN MENU -->
+    <Border IsVisible="{Binding IsMainMenuVisible}" Background="#2E2E2E" CornerRadius="12" Padding="32" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+      <StackPanel Spacing="20">
+        <TextBlock Text="Reversi" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+        <Button Content="&#x25B6; Start Game" Command="{Binding StartGameCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
+        <Button Content="&#x274C; Quit" Command="{Binding ReturnToMenuCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
+      </StackPanel>
+    </Border>
+    <!-- GAME BOARD -->
+    <Grid IsVisible="{Binding IsGameBoardVisible}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Border Grid.Row="1" Grid.Column="1" Background="#2D4C2D" CornerRadius="12" Padding="12" Width="480" Height="480">
+        <ItemsControl ItemsSource="{Binding Cells}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <UniformGrid Columns="8" Rows="8"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Border Classes="game-cell" Background="{Binding IsValidMove, Converter={StaticResource ValidMoveBackgroundConverter}}">
+                <Grid>
+                  <Button Command="{Binding DataContext.CellClickCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid>
+                      <Ellipse Width="28" Height="28" Fill="{Binding Piece, Converter={StaticResource PieceColorConverter}}" Stroke="#222" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                  </Button>
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </Border>
+    </Grid>
+    <!-- GAME OVER -->
+    <Border IsVisible="{Binding IsGameOverVisible}" Background="#66000000" CornerRadius="16" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Width="360">
+      <StackPanel Spacing="16">
+        <TextBlock Text="Game Over" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+        <TextBlock Text="{Binding GameResultText}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFDD66"/>
+        <Button Content="&#x1F501; Play Again" Command="{Binding RestartGameCommand}" FontSize="14" Padding="8"/>
+        <Button Content="&#x1F3E0; Return to Menu" Command="{Binding ReturnToMenuCommand}" FontSize="14" Padding="8"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>
