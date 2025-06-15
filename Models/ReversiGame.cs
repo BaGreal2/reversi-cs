@@ -119,4 +119,16 @@ public class ReversiGame
 
     private bool InBounds(int x, int y) =>
         x >= 0 && y >= 0 && x < Size && y < Size;
+
+    public void SkipTurn() => CurrentPlayer = Opponent(CurrentPlayer);
+
+    public ReversiGame Clone()
+    {
+        var clone = new ReversiGame();
+        for (int y = 0; y < Size; y++)
+            for (int x = 0; x < Size; x++)
+                clone.Board[x, y] = Board[x, y];
+        clone.CurrentPlayer = CurrentPlayer;
+        return clone;
+    }
 }

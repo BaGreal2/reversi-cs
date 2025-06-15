@@ -8,6 +8,10 @@
     <Border IsVisible="{Binding IsMainMenuVisible}" Background="#2E2E2E" CornerRadius="12" Padding="32" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
       <StackPanel Spacing="20">
         <TextBlock Text="Reversi" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+          <TextBlock Text="Difficulty:" VerticalAlignment="Center" Foreground="White"/>
+          <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" Width="120"/>
+        </StackPanel>
         <Button Content="&#x25B6; Start Game" Command="{Binding StartGameCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
         <Button Content="&#x274C; Quit" Command="{Binding ReturnToMenuCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
       </StackPanel>
@@ -46,14 +50,15 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
       </Border>
+      <Button Grid.Row="2" Grid.Column="1" Content="&#x1F6AB; Give Up" Command="{Binding GiveUpCommand}" FontSize="14" Padding="8" HorizontalAlignment="Center"/>
     </Grid>
     <!-- GAME OVER -->
     <Border IsVisible="{Binding IsGameOverVisible}" Background="#66000000" CornerRadius="16" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Width="360">
       <StackPanel Spacing="16">
         <TextBlock Text="Game Over" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
         <TextBlock Text="{Binding GameResultText}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFDD66"/>
-        <Button Content="&#x1F501; Play Again" Command="{Binding RestartGameCommand}" FontSize="14" Padding="8"/>
-        <Button Content="&#x1F3E0; Return to Menu" Command="{Binding ReturnToMenuCommand}" FontSize="14" Padding="8"/>
+        <Button Content="&#x1F501; Play Again" Command="{Binding RestartGameCommand}" FontSize="14" Padding="8" HorizontalAlignment="Center"/>
+        <Button Content="&#x1F3E0; Return to Menu" Command="{Binding ReturnToMenuCommand}" FontSize="14" Padding="8" HorizontalAlignment="Center"/>
       </StackPanel>
     </Border>
   </Grid>
