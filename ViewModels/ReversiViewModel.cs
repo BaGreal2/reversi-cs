@@ -1,3 +1,5 @@
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -56,6 +58,7 @@ public sealed class ReversiViewModel : ViewModelBase
 
     public ICommand CellClickCommand    { get; }
     public ICommand GiveUpCommand       { get; } 
+    public ICommand QuitCommand         { get; }
     public ICommand StartGameCommand    { get; }
     public ICommand RestartGameCommand  { get; }
     public ICommand ReturnToMenuCommand { get; }
@@ -87,6 +90,7 @@ public sealed class ReversiViewModel : ViewModelBase
 
         CellClickCommand    = new RelayCommand<CellViewModel>(OnCell);
         GiveUpCommand       = new RelayCommand(GiveUp);
+        QuitCommand         = new RelayCommand(Quit);
         StartGameCommand    = new RelayCommand(Start);
         RestartGameCommand  = new RelayCommand(Restart);
         ReturnToMenuCommand = new RelayCommand(ReturnToMenu);
@@ -179,7 +183,14 @@ public sealed class ReversiViewModel : ViewModelBase
         Refresh();
         IsGameOverVisible = false;
         IsMainMenuVisible = false;
-        ContinueFlow();                    // in case Black starts with no moves (rare)
+        ContinueFlow();
+    }
+
+    void Quit()
+    {
+        if (Application.Current?.ApplicationLifetime
+            is IClassicDesktopStyleApplicationLifetime desk)
+            desk.Shutdown();
     }
 
     void Restart()      => Start();

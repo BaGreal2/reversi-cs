@@ -13,7 +13,7 @@
           <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" Width="120"/>
         </StackPanel>
         <Button Content="&#x25B6; Start Game" Command="{Binding StartGameCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
-        <Button Content="&#x274C; Quit" Command="{Binding ReturnToMenuCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
+        <Button Content="&#x274C; Quit" Command="{Binding QuitCommand}" FontSize="16" Padding="8" HorizontalAlignment="Center"/>
       </StackPanel>
     </Border>
     <!-- GAME BOARD -->
